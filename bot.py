@@ -3,12 +3,20 @@ import os
 # guard against missing dependency so users see clear message
 try:
     from groq import Groq  # Змінили бібліотеку на Groq
-except ImportError as imp_err:
-    raise ImportError(
-        "The 'groq' package is required.\n"
-        "Install it in your environment with `pip install groq` "
-        "or add it to your requirements.txt.`"  
-    ) from imp_err
+except ImportError:
+    # attempt to install automatically then retry
+    import sys
+    import subprocess
+
+    print("'groq' not found, installing package...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "groq"])
+    try:
+        from groq import Groq
+    except ImportError as imp_err:
+        raise ImportError(
+            "Failed to import 'groq' even after installing. "
+            "Please check your environment."
+        ) from imp_err
 
 from telegram import Update
 from telegram.ext import (
