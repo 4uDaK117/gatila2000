@@ -1,5 +1,15 @@
 import os
-from groq import Groq  # Змінили бібліотеку на Groq
+
+# guard against missing dependency so users see clear message
+try:
+    from groq import Groq  # Змінили бібліотеку на Groq
+except ImportError as imp_err:
+    raise ImportError(
+        "The 'groq' package is required.\n"
+        "Install it in your environment with `pip install groq` "
+        "or add it to your requirements.txt.`"  
+    ) from imp_err
+
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder,
