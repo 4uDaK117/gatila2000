@@ -32,7 +32,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 {"role": "system", "content": "Ти харизматичний, впевнений мачо. Пиши коротко, впевнено, з гумором, українською мовою."},
                 {"role": "user", "content": f"Дівчина написала: '{user_text}'. Дай варіант відповіді."}
             ]
-        )        .\init_git.bat
         
         reply = response.choices[0].message.content or "Помилка: порожня відповідь від моделі"
         await update.message.reply_text(reply)
@@ -53,4 +52,5 @@ def main():
     app.run_polling()
 
 if __name__ == "__main__":
+
     main()
