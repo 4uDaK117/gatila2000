@@ -26,12 +26,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await context.bot.send_chat_action(chat_id=update.effective_chat.id, action="typing")
         
         # ЗАМІНЕНО НА АКТУАЛЬНУ МОДЕЛЬ llama-3.3-70b-versatile
-        response = client.chat.completions.create
-            model="llama-3.3-70b-versatile" 
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile", 
             messages=[
                 {"role": "system", "content": "Ти харизматичний, впевнений мачо. Пиши коротко, впевнено, з гумором, українською мовою."},
                 {"role": "user", "content": f"Дівчина написала: '{user_text}'. Дай варіант відповіді."}
             ]
+        )
         
         reply = response.choices[0].message.content or "Помилка: порожня відповідь від моделі"
         await update.message.reply_text(reply)
@@ -52,8 +53,4 @@ def main():
     app.run_polling()
 
 if __name__ == "__main__":
-
     main()
-
-
-
