@@ -27,8 +27,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         # ЗАМІНЕНО НА АКТУАЛЬНУ МОДЕЛЬ llama-3.3-70b-versatile
         response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile", 
-            messages=[
+            model = "llama-3.3-70b-versatile", 
+            messages = [
                 {"role": "system", "content": "Ти харизматичний, впевнений мачо. Пиши коротко, впевнено, з гумором, українською мовою."},
                 {"role": "user", "content": f"Дівчина написала: '{user_text}'. Дай варіант відповіді."}
             ]
@@ -54,3 +54,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
