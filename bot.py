@@ -4,19 +4,29 @@ import os
 try:
     from groq import Groq  # Змінили бібліотеку на Groq
 except ImportError:
-    # attempt to install automatically then retry
-    import sys
-    import subprocess
+    # cannot install? fall back to dummy implementation so bot still runs
+    print("WARNING: 'groq' package not found. Using stub client; responses will be fake.")
 
-    print("'groq' not found, installing package...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "groq"])
-    try:
-        from groq import Groq
-    except ImportError as imp_err:
-        raise ImportError(
-            "Failed to import 'groq' even after installing. "
-            "Please check your environment."
-        ) from imp_err
+    class Groq:
+        def __init__(self, api_key=None):
+            self.api_key = api_key
+
+        class chat:
+            class completions:
+                @staticmethod
+                def create(model=None, messages=None):
+                    class DummyMsg:
+                        content = (
+                            "⚠️ Groq not installed; this is a stub response."
+                        )
+
+                    class DummyChoice:
+                        message = DummyMsg()
+
+                    class DummyResp:
+                        choices = [DummyChoice()]
+
+                    return DummyResp()
 
 from telegram import Update
 from telegram.ext import (
